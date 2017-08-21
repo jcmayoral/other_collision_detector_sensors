@@ -9,7 +9,7 @@ matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 
 
-class AccGaussCUSUM(RealTimePlotter,ChangeDetection,GaussPlot):
+class LaserGaussCUSUM(RealTimePlotter,ChangeDetection,GaussPlot):
     def __init__(self, max_samples = 500, pace = 2, cusum_window_size = 10 ):
         self.data_ = []
         self.data_.append([0,0,0])
@@ -19,7 +19,7 @@ class AccGaussCUSUM(RealTimePlotter,ChangeDetection,GaussPlot):
         RealTimePlotter.__init__(self,max_samples,pace)
         ChangeDetection.__init__(self,10)
         GaussPlot.__init__(self )
-        rospy.init_node("accelerometer_cusum", anonymous=True)
+        rospy.init_node("laser_detection_ros_gaus_cusum", anonymous=True)
         rospy.Subscriber("accel", AccelStamped, self.accCB)
         plt.legend()
         plt.show()
