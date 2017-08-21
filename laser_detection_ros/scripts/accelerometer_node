@@ -1,0 +1,6 @@
+#!/usr/bin/env python3
+from accelerometer_ros.AccPublisher import AccPublisher
+
+if __name__ == '__main__':
+    main = AccPublisher()
+    main.run()
