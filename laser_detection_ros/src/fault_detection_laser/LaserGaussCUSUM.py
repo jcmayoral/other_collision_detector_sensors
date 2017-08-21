@@ -2,7 +2,7 @@ import rospy
 from MyStatics.RealTimePlotter import RealTimePlotter
 from MyStatics.GaussianPlotter import GaussPlot
 from FaultDetection import ChangeDetection
-from geometry_msgs.msg import AccelStamped
+from sensor_msgs.msg import LaserScan
 import numpy as np
 import matplotlib
 matplotlib.use('TkAgg')
@@ -17,16 +17,16 @@ class LaserGaussCUSUM(RealTimePlotter,ChangeDetection,GaussPlot):
         self.msg = 0
         self.window_size = cusum_window_size
         RealTimePlotter.__init__(self,max_samples,pace)
-        ChangeDetection.__init__(self,10)
+        ChangeDetection.__init__(self,10,721)
         GaussPlot.__init__(self )
         rospy.init_node("laser_detection_ros_gaus_cusum", anonymous=True)
-        rospy.Subscriber("scan_unified", AccelStamped, self.accCB)
+        rospy.Subscriber("scan_unified", LaserScan, self.laserCB)
         plt.legend()
         plt.show()
         rospy.spin()
         plt.close("all")
 
-    def accCB(self, msg):
+    def laserCB(self, msg):
         while (self.i< self.window_size):
             self.addData([i for i in msg.ranges])
             self.i = self.i+1
@@ -43,6 +43,6 @@ class LaserGaussCUSUM(RealTimePlotter,ChangeDetection,GaussPlot):
         print(len(x1), len(np.sort(self.s_z)))
         plt.scatter([x1,x1,x1],np.sort(self.s_z))
         """
-        x = np.linspace(-140, 140, 200)
+        x = np.linspace(0, 10, 200)
         y = np.array([i.pdf(x) for i in self.rv])
         self.update(msg.header.seq,x.tolist(),y.T.tolist())
