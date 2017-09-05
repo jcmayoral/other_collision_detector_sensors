@@ -10,10 +10,10 @@ class Plotter(RealTimePlotter):
         self.data_ = []
         self.step_ = []
         print ("Plotter Constructor Initialized")
-        super().__init__(threshold,pace)
+        super().__init__(threshold,pace,False)
         self.ax.legend("False")
         rospy.init_node("laser_plotter", anonymous=True)
-        rospy.Subscriber("scan_unified", LaserScan, self.laserCB)
+        rospy.Subscriber("scan_front", LaserScan, self.laserCB)
         plt.show()
         rospy.spin()
         plt.close("all")

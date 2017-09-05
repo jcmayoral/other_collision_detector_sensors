@@ -2,4 +2,4 @@
 from fault_detection_laser.LaserCUSUM import LaserCUSUM
 
 if __name__ == '__main__':
-    main = LaserCUSUM(20,1,5)
+    main = LaserCUSUM(40,1,1)

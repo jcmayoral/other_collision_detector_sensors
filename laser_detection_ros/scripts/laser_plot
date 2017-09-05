@@ -2,4 +2,4 @@
 from laser_detection_ros.Plotter import Plotter
 
 if __name__ == '__main__':
-    main = Plotter(10,2)
+    main = Plotter(50,5)
