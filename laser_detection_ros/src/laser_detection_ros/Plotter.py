@@ -19,6 +19,7 @@ class Plotter(RealTimePlotter):
         plt.close("all")
 
     def laserCB(self, msg):
+        max_value = msg.range_max
         self.step_.append(msg.header.seq)
-        self.data_.append([i for i in msg.ranges])
+        self.data_.append([i/max_value for i in msg.ranges])
         self.update(msg.header.seq,self.step_,self.data_)

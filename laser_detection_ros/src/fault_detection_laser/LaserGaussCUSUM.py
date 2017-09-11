@@ -28,7 +28,7 @@ class LaserGaussCUSUM(RealTimePlotter,ChangeDetection,GaussPlot):
 
     def laserCB(self, msg):
         while (self.i< self.window_size):
-            self.addData([i for i in msg.ranges])
+            self.addData([i/msg.range_max for i in msg.ranges])
             self.i = self.i+1
             if len(self.samples) is self.max_samples:
                 self.samples.pop(0)
@@ -43,6 +43,6 @@ class LaserGaussCUSUM(RealTimePlotter,ChangeDetection,GaussPlot):
         print(len(x1), len(np.sort(self.s_z)))
         plt.scatter([x1,x1,x1],np.sort(self.s_z))
         """
-        x = np.linspace(0, 4, 50)
+        x = np.linspace(-1, 1, 50)
         y = np.array([i.pdf(x) for i in self.rv])
         self.update(msg.header.seq,x.tolist(),y.T.tolist())

@@ -25,7 +25,7 @@ class LaserCUSUM(RealTimePlotter,ChangeDetection):
 
     def laserCB(self, msg):
         while (self.i< self.window_size):
-            self.addData([i for i in msg.ranges])
+            self.addData([i/msg.range_max for i in msg.ranges])
             self.i = self.i+1
             if len(self.samples) is self.max_samples:
                 self.samples.pop(0)
