@@ -18,12 +18,13 @@ class LaserCUSUM(RealTimePlotter,ChangeDetection):
         RealTimePlotter.__init__(self,max_samples,pace,False)
         ChangeDetection.__init__(self,1,1)
         rospy.init_node("laser_detection_ros_cusum", anonymous=True)
-        rospy.Subscriber("scan_front", LaserScan, self.laserCB)
+        rospy.Subscriber("/scan_unified", LaserScan, self.laserCB)
         plt.show()
         rospy.spin()
         plt.close("all")
 
     def laserCB(self, msg):
+        print ("inside")
         while (self.i< self.window_size):
             self.addData([i/msg.range_max for i in msg.ranges])
             self.i = self.i+1
@@ -32,7 +33,7 @@ class LaserCUSUM(RealTimePlotter,ChangeDetection):
             return
         self.i=0
         self.changeDetection(len(self.samples))
-        cur = np.array(self.cum_sum, dtype = np.float64)
+        cur = np.array(self.cum_sum)
         cur = np.nan_to_num(cur)
         cur[np.isnan(cur)] = 0
         #for i in range(len(cur)):
